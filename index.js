@@ -10,30 +10,53 @@ function loadData(){
 }
 
 
-let tableHead = ['Name', 'Price',' '];
+let tableHead = ['Name', 'Price (VND)'];
 function showAllGoods(){
+	let config,output;
+	let listTable = [];
 	let list = [];
 	list = Object.values(goods);
-	let listTable = []
 	for (let item of list){
 		for (let i = 0; i < item.length; i++){
-			listTable.push(Object.values(item[i]).concat('VND'));
+			listTable.push(Object.values(item[i]));
 		}
 	}
-	listTable.unshift(tableHead)
-	console.log(table(listTable));
+	listTable.unshift(tableHead);
+
+	config = {
+    columns: {
+        1: {
+            alignment: 'right',
+            minWidth: 10
+        },
+    }
+};
+
+output = table(listTable, config);
+	console.log(output);
 	console.log('            ');
 }
 
 function checkItemPrice(){
 	let check = 0;
 	let typeCheck = readlineSync.question('Which type of item do you want to check?\n> ');
-	let typeCheckTable = []
+	let typeCheckTable = [];
+	let output, config;
+
 	for (let i in goods[typeCheck]){
-			typeCheckTable.push(Object.values(goods[typeCheck][i]).concat('VND'));
+			typeCheckTable.push(Object.values(goods[typeCheck][i]));
 	}
 	typeCheckTable.unshift(tableHead);
-	console.log(table(typeCheckTable));
+	config = {
+    columns: {
+        1: {
+            alignment: 'right',
+            minWidth: 10
+        },
+    }
+	};
+	output = table(typeCheckTable,config);
+	console.log(output);
 	console.log('            ');
 
 	if (!goods[typeCheck]){
@@ -70,9 +93,21 @@ function checkItemPrice(){
 			}
 			else {
 				let itemCheckTable = [];
-				itemCheckTable.push(Object.values(itemPrice).concat('VND'));
+				let config, output;
+
+				itemCheckTable.push(Object.values(itemPrice));
 				itemCheckTable.unshift(tableHead);
-				console.log(table(itemCheckTable));
+
+				config = {
+			    columns: {
+			        1: {
+			            alignment: 'right',
+			            minWidth: 10
+			        },
+			    }
+				};
+				output = table(itemCheckTable,config);
+				console.log(output);
 
 				if (readlineSync.keyInYN("Do you want to check another item? ")) checkItemPrice(goods);
 				console.log('      ');
@@ -129,6 +164,8 @@ function countPrice(){
 					let lastReceipt = receipt.reduce((total, item) => total + item.price * item.quantity, 0);
 					let itemsTable = [];
 					let countPriceTableHead = ["Name", "Quantity", "Price"];
+					let config, output;
+
 					console.log('Here is your receipt: \n');
 					for (let content of receipt){
 						itemsTable.push(Object.values(content))
@@ -137,10 +174,19 @@ function countPrice(){
 					console.log(table(itemsTable));
 
 					let receiptTable = [
-														['You have to pay', ' ' ],
-														[ lastReceipt, 'VND']
+														['You have to pay' ],
+														[ lastReceipt + ' VND']
 													];
-					console.log(table(receiptTable));
+					config = {
+				    columns: {
+				        1: {
+				            alignment: 'right',
+				            minWidth: 10
+				        },
+				    }
+					};
+					output = table(receiptTable, config);
+					console.log(output);
 					let customerMoney = readlineSync.question('Your money is: ');
 					console.log(' ');
 
@@ -148,27 +194,27 @@ function countPrice(){
 					let billTable = [];
 					if (bill < 0 ) {
 						billTable = [
-											[ 'You\'re missing', ' ' ],
-											[ Math.abs(bill), 'VDN'],
-											['Thank you!!!', ' '],
-											['See you again!!!', ' ']
+											[ 'You\'re missing', 'VND'],
+											[ 'Thank you!!! & See you again!!!', Math.abs(bill)]
 										];
-						console.log(table(billTable));
+
+					output = table(billTable, config);
+					console.log(output);
 					}
 					else if (bill > 0){
 						billTable = [
-											[ 'Here is your excess cash:', ' ' ],
-											[ bill, 'VND'],
-											['Thank you!!!', ' ' ],
-											['See you again!!!']
+											[ 'Here is your excess cash:', 'VND'],
+											[ 'Thank you!!! & See you again!!!', bill]
 										];
-						console.log(table(billTable));
+					output = table(billTable, config);
+					console.log(output);
 					}
 					else{
 						billTable = [
 											[ 'You paid enouhgt', ' :D ' ],
 											['Thank you!!!', 'See you again!!!']
 										];
+
 						console.log(table(billTable));
 					}
 
