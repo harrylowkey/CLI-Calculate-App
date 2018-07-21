@@ -183,7 +183,7 @@ function countPrice(){
 function addType(){
 	let typeAdd = readlineSync.question('What is the type of item? ');
 	let infoItem = [];
-
+	if (!goods[typeAdd]) goods[typeAdd] = [];
 	function addItem(){
 		let check = false;
 			let itemNameAdd = readlineSync.question('What is the name of item? ');
@@ -221,7 +221,7 @@ function addType(){
 					if (readlineSync.keyInYN("Do you want to add more type? ")){
 						addType()();
 					}
-					console.log('flag');
+					// console.log('flag');
 					console.log(infoItem);
 					for (let content of infoItem){
 						goods[typeAdd].push(content);
