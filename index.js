@@ -15,6 +15,7 @@ function showAllGoods(){
 	let config,output;
 	let listTable = [];
 	let list = [];
+
 	list = Object.values(goods);
 	for (let item of list){
 		for (let i = 0; i < item.length; i++){
@@ -22,7 +23,6 @@ function showAllGoods(){
 		}
 	}
 	listTable.unshift(tableHead);
-
 	config = {
     columns: {
         1: {
