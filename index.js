@@ -1,8 +1,8 @@
 let fs = require('fs');
 let readlineSync = require('readline-sync')
 let {table} = require('table')
-let goods = {};ahah
 
+let goods = {};
 
 function loadData(){
 	let data = fs.readFileSync(('Hanghoa.json'), { encoding: 'utf8'});
