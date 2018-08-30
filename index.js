@@ -1,7 +1,7 @@
 let fs = require('fs');
 let readlineSync = require('readline-sync')
 let {table} = require('table')
-let goods = {};
+let goods = {};ahah
 
 
 function loadData(){
