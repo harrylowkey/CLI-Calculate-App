@@ -64,57 +64,42 @@ function checkItemPrice(){
 		if (readlineSync.keyInYN("Do you want to check another grocery? ")) checkItemPrice(goods);
 			console.log('      ');
 	}
-
 	else{
-		for(let i in goods){
-			if (i === typeCheck){
+		check = 0;
+		let itemCheck = readlineSync.question("Which item do you want to check?\n> ");
+		let itemPrice = goods[typeCheck].find(function(item){
+			if (item.name === itemCheck){
 				check = 1;
-				break;
+				return item;
 			}
+		})
+		if (check === 0) {
+			console.log('We don\'t have ' + itemCheck + ' in store');
+			if (readlineSync.keyInYN("Do you want to check another item? ")) checkItemPrice(goods);
+			console.log('        ');
 		}
-		if (check === 0){
-			console.log('We don\'t have ' + typeCheck + ' type in the store!')
-			if (readlineSync.keyInYN("Do you want to check another grocery? ")) checkItemPrice(goods);
-				console.log('      ');
-		}
-		else{
-			check = 0;
-			let itemCheck = readlineSync.question("Which item do you want to check?\n> ");
-			let itemPrice = goods[typeCheck].find(function(item){
-				if (item.name === itemCheck){
-					check = 1;
-					return item;
-				}
-			})
-			if (check === 0) {
-				console.log('We don\'t have ' + itemCheck + ' in store');
-				if (readlineSync.keyInYN("Do you want to check another item? ")) checkItemPrice(goods);
-				console.log('        ');
-			}
-			else {
-				let itemCheckTable = [];
-				let config, output;
+		else {
+			let itemCheckTable = [];
+			let config, output;
 
-				itemCheckTable.push(Object.values(itemPrice));
-				itemCheckTable.unshift(tableHead);
+			itemCheckTable.push(Object.values(itemPrice));
+			itemCheckTable.unshift(tableHead);
 
-				config = {
-			    columns: {
-			        1: {
-			            alignment: 'right',
-			            minWidth: 10
-			        },
-			    }
-				};
-				output = table(itemCheckTable,config);
-				console.log(output);
+			config = {
+		    columns: {
+		        1: {
+		            alignment: 'right',
+		            minWidth: 10
+		        },
+		    }
+			};
+			output = table(itemCheckTable,config);
+			console.log(output);
 
-				if (readlineSync.keyInYN("Do you want to check another item? ")) checkItemPrice(goods);
-				console.log('      ');
-			}
+			if (readlineSync.keyInYN("Do you want to check another item? ")) checkItemPrice(goods);
+			console.log('      ');
 		}
 	}
-
 }
 
 
